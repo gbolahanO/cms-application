@@ -1,0 +1,16 @@
+type User {
+  id: ID! @unique
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Post {
+  id: ID! @unique
+  title: String!
+  content: String!
+  post_image: String!
+  slug: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
