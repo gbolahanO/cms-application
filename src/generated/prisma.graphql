@@ -323,6 +323,7 @@ type Post {
   id: ID!
   title: String!
   body: String!
+  published: Boolean!
   author: User!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   createdAt: DateTime!
@@ -338,6 +339,7 @@ type PostConnection {
 input PostCreateInput {
   title: String!
   body: String!
+  published: Boolean!
   author: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostInput
 }
@@ -355,12 +357,14 @@ input PostCreateOneWithoutCommentsInput {
 input PostCreateWithoutAuthorInput {
   title: String!
   body: String!
+  published: Boolean!
   comments: CommentCreateManyWithoutPostInput
 }
 
 input PostCreateWithoutCommentsInput {
   title: String!
   body: String!
+  published: Boolean!
   author: UserCreateOneWithoutPostsInput!
 }
 
@@ -376,6 +380,8 @@ enum PostOrderByInput {
   title_DESC
   body_ASC
   body_DESC
+  published_ASC
+  published_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -386,6 +392,7 @@ type PostPreviousValues {
   id: ID!
   title: String!
   body: String!
+  published: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -433,6 +440,8 @@ input PostScalarWhereInput {
   body_not_starts_with: String
   body_ends_with: String
   body_not_ends_with: String
+  published: Boolean
+  published_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -475,6 +484,7 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   title: String
   body: String
+  published: Boolean
   author: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostInput
 }
@@ -482,11 +492,13 @@ input PostUpdateInput {
 input PostUpdateManyDataInput {
   title: String
   body: String
+  published: Boolean
 }
 
 input PostUpdateManyMutationInput {
   title: String
   body: String
+  published: Boolean
 }
 
 input PostUpdateManyWithoutAuthorInput {
@@ -516,12 +528,14 @@ input PostUpdateOneRequiredWithoutCommentsInput {
 input PostUpdateWithoutAuthorDataInput {
   title: String
   body: String
+  published: Boolean
   comments: CommentUpdateManyWithoutPostInput
 }
 
 input PostUpdateWithoutCommentsDataInput {
   title: String
   body: String
+  published: Boolean
   author: UserUpdateOneRequiredWithoutPostsInput
 }
 
@@ -584,6 +598,8 @@ input PostWhereInput {
   body_not_starts_with: String
   body_ends_with: String
   body_not_ends_with: String
+  published: Boolean
+  published_not: Boolean
   author: UserWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
