@@ -11,8 +11,11 @@ const resolvers = {
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
-  context: {
-    prisma
+  context(request) {
+    return {
+    	prisma,
+    	request
+    }
   }
 })
 

@@ -73,7 +73,6 @@ input CreateUserInput {
 }
 
 input CreatePostInput {
-  title: String
-  body: String
-  author: String
+  title: String!
+  body: String!
 }
