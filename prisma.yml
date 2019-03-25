@@ -1,9 +1,10 @@
 endpoint: https://eu1.prisma.sh/gbolahan-olawuyi/cms-app/dev
 datamodel: datamodel.prisma
+secret: the-things-you-shouldnt-know
 
 generate:
   - generator: graphql-schema
-    output: ./src/generated
+    output: ./src/generated/prisma.graphql
 
 hooks:
   post-deploy:
