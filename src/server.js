@@ -1,22 +1,11 @@
 import { GraphQLServer } from 'graphql-yoga'
 import prisma from './prisma'
+import Query from './resolvers/Query'
+import Mutation from './resolvers/Mutation'
 
 const resolvers = {
-  Query: {
-  },
-  Mutation: {
-    createPost: async (_, { data }, { prisma }, info) => {
-      return prisma.mutation.createPost({
-        data : {
-          ...data
-        }
-      }, info)
-
-      // const post = await prisma.query.post()
-
-      console.log("created")
-    }
-  }
+  Query,
+  Mutation
 }
 
 const server = new GraphQLServer({
