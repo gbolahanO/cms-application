@@ -9,9 +9,9 @@ const Mutation = {
 			throw new Error('password must be 8 characters')
 		}
 
-		const password = await bcrypt.hash(args.data.password, 10)	
+		const password = await bcrypt.hash(args.data.password, 10)
 
-		const user = prisma.mutation.createUser({ 
+		const user = prisma.mutation.createUser({
 			data: {
 				...args.data,
 				password
@@ -110,6 +110,12 @@ const Mutation = {
 			}
 		})
 
+		const isPublished = await prisma.exists.Post({ id: args.id, published: true})
+
+		if (isPublished && args.data.published === false) {
+			await prisma.mutation.deleteManyComments({ where: {post: { id: args.id }}})
+		}
+
 		if (!postExists) {
 			throw new Error("Unable to update post")
 		}
@@ -123,6 +129,14 @@ const Mutation = {
 	},
 	async createComment(_, args, { prisma, request }, info) {
 		const userId = getUserId(request)
+		const postExists = await prisma.exists.Post({
+			id: arg.data.post,
+			published: true
+		})
+
+		if (!postExists) {
+			throw new Error("Unable to find post")
+		}
 
 		return prisma.mutation.createComment({
 			data: {
