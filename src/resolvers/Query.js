@@ -1,7 +1,12 @@
 import getUserId from '../utils/getUserId'
 const Query = {
 	users(_, args, { prisma }, info) {
-		const opArgs = {}
+		const opArgs = {
+			first: args.first,
+			skip: args.skip,
+			after: args.after,
+			orderBy: args.orderBy
+		}
 
 		if (args.query) {
 			opArgs.where = {
@@ -16,6 +21,10 @@ const Query = {
 	myPosts(_, args, { prisma, request }, info) {
 		const userId = getUserId(request)
 		const opArgs = {
+			first: args.first,
+			skip: args.skip,
+			after: args.after,
+			orderBy: args.orderBy,
 			where: {
 				author: {
 					id: userId
@@ -36,6 +45,10 @@ const Query = {
 	posts(_, args, { prisma }, info) {
 		const opArgs = {
 			where: {
+				first: args.first,
+				skip: args.skip,
+				after: args.after,
+				orderBy: args.orderBy,
 				published: true
 			}
 		}
@@ -51,7 +64,13 @@ const Query = {
 		return prisma.query.posts(opArgs, info)
 	},
 	comments(_, args, { prisma }, info) {
-		prisma.query.comments(null, info)
+		const opArgs = {
+			first: args.first,
+			skip: args.skip,
+			after: args.after,
+			orderBy: args.orderBy,
+		}
+		return prisma.query.comments(opArgs, info)
 	},
 	async me(_, args, { prisma, request }, info) {
 		const userId = getUserId(request)
